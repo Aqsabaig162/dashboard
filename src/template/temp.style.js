@@ -5,15 +5,8 @@ export const Tempwrapper = styled.div`
     width: 100%;
     height: 100vh;
     @media screen and (max-width: 768px) {
-        {
-           display: none;
-           #responsive{
-            justify-content: center;
-           }
-         
-       }
-     }
-  }
+        display: none; }
+}
 `;
 export const Tem = styled.div`
   display: flex;
@@ -24,7 +17,12 @@ export const Tem = styled.div`
   .log {
     align-items: center;
   }
-
+  @media screen and (max-width: 768px) {
+        justify-content: center;
+        height: 100vh;
+        align-items: center;
+       } 
+ }
   .route-wrapper {
     width: 100%;
     max-width: 50%;

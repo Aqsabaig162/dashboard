@@ -5,7 +5,7 @@ export const Appwrapper = styled.div
 `
 background: #F0F2F5;
 max-width: 100%;
-max-height : 100%;
+height : 100vh;
 `
 export const Maincontent = styled.div   
 `

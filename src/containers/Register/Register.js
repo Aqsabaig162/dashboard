@@ -3,14 +3,58 @@ import {LoginWrapper} from "./register.style"
 import {Input, Space , Button , DatePicker , Checkbox, Form, Select } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../firebase'
+import { useState } from "react";
 
 export default function Register() {
 
+  const [email, setemail] = useState('')
+  const [password, setpassword] = useState('')
+
 const navigate = useNavigate();
 
-const register = () => {
-  navigate('/')
-}
+const register = async e => {
+  e.preventDefault();
+  try{
+    const resp = await auth.createUserWithEmailAndPassword(email, password)
+    if (resp)  {
+      console.log(auth);
+      if(auth) {
+        console.log('registered')
+        navigate('/');
+       
+      }
+    }
+  }
+  catch(error){
+    alert(error.message)
+  }
+  }
+
+  const signin = async e =>{
+    e.preventDefault();
+    try{
+      const resp = await auth.createUserWithEmailAndPassword(email,password)
+      if (resp) {
+        console.log('resp recived')
+        console.log(resp);
+       const key = resp.user._delegate.accessToken
+       console.log(key)
+       localStorage.setItem('Jwt', key)
+       console.log('signed in')
+    }
+  }
+  catch(error){
+    alert(error.message)
+  }
+  }
+  const handleEmail = e => {
+    setemail(e.target.value)
+  }
+
+  const handlepassword = e => {
+    setpassword(e.target.value)
+  }
 
     const { Option } = Select;
     const [form] = Form.useForm();
@@ -98,7 +142,9 @@ const register = () => {
       <Form.Item
        
         name="email"
-        label="Username"
+        label="Email"
+        value = {email}
+        onChange= {handleEmail}
         rules={[
           {
             required: true,
@@ -113,6 +159,8 @@ const register = () => {
       <Form.Item
         label="Password"
         name="password"
+        value = {password}
+        onChange = {handlepassword}
         rules={[
           {
             required: true,

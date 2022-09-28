@@ -4,14 +4,14 @@ import './index.css';
 //import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.min.css';
 import AppRouter from './router/AppRouter';
+import Navbar from './template/Menu Template/MenuTemplate';
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  
-  <AppRouter />
+  <Navbar/>
   </React.StrictMode>
 );
 
