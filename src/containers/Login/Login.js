@@ -6,8 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import {signin, handleEmail , handlepassword} from '../Register/Register'
 import { useState } from "react";
 import { auth } from '../firebase'
+import { useDispatch} from 'react-redux'
+import { setLogin } from "../../features/login/loginslice";
 
 const Login = () => {
+  const dispatch = useDispatch()
   const [email, setemail] = useState('')
   const [password, setpassword] = useState('')
   const navigate = useNavigate();
@@ -24,7 +27,9 @@ const Login = () => {
        console.log(key)
        localStorage.setItem('Jwt', key)
        console.log('signed in')
-       navigate('/register')
+      
+
+       dispatch(setLogin(true));
     }
   }
   catch(error){

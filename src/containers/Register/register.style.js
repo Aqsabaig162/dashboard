@@ -47,6 +47,11 @@ span{
     font-size: small;
 }
 
+.errorMsg{
+    font-size: 12px;
+    color: red;
+}
+
 `
 
 export const Feilds = styled.div 

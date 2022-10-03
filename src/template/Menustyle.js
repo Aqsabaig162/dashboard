@@ -1,7 +1,10 @@
 import styled from "styled-components";
+import { Layout , Space , Input } from 'antd';
+const { Header , Sider , Content , Footer} = Layout;
+
+const { Search } = Input;
 
 export const MenuBar = styled.div`
-
 .menuBar {
     padding: 0 20px;
     border-bottom: solid 1px #e8e8e8;
@@ -41,6 +44,7 @@ export const MenuBar = styled.div`
   
   .menuCon .ant-menu-horizontal {
     border-bottom: none;
+    align-items: center;
   }
   
   .menuCon .leftMenu {
@@ -134,4 +138,71 @@ export const MenuBar = styled.div`
   }
 
 `
+export const CustomHeader = styled(Header)
+`
 
+background : #219EBC;
+`
+export const CustomLayoutp = styled(Layout)
+`
+background: grey;
+display: flex;
+height: 100vh;
+
+.right{
+  text-align: end;
+}
+
+.icon{
+  font-size: 150%;
+  cursor: pointer;
+  color: black;
+}
+
+
+
+`
+export const CustomLayoutc = styled(Layout)
+`
+flex: 1;
+background: grey;
+`
+export const CustomSider = styled(Sider)
+`
+flex: 1;
+color: white;
+background: #023047;
+`
+export const CustomContent = styled(Content)
+`
+flex: 1;
+background: #F0F2F5;
+
+`
+export const CustomSpace = styled(Space)
+`
+width: 100%;
+`
+export const CustomSearch = styled(Search)
+`
+width: 60%;
+vertical-align: middle;
+`
+export const CustomFooter = styled (Footer) 
+`
+display: flex;
+justify-content: center;
+background: white;
+`
+
+export const Container = styled.div 
+`
+padding: 15%;
+display: flex;
+flex-direction: column;
+height: 100%;
+gap: 10%;
+.img{
+  width: 60%;
+}
+`

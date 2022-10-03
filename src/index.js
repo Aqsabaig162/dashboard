@@ -4,14 +4,20 @@ import './index.css';
 //import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.min.css';
 import AppRouter from './router/AppRouter';
-import Navbar from './template/Menu Template/MenuTemplate';
+import Layoutmain from './template/Layoutmain';
+import Usertable from './containers/Users/Usertable';
+import Register from './containers/Register/Register';
+import { store } from "./store/store";
+import { Provider } from "react-redux";
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  <Navbar/>
+  <Provider store={store}>
+  <AppRouter />
+  </Provider>
   </React.StrictMode>
 );
 

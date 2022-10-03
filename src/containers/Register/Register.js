@@ -2,18 +2,96 @@ import React from 'react'
 import {LoginWrapper} from "./register.style"
 import {Input, Space , Button , DatePicker , Checkbox, Form, Select } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Link } from 'react-router-dom';
 import { auth } from '../firebase'
 import { useState } from "react";
+// import addNotification from 'react-push-notification';
+
 
 export default function Register() {
-
+  
+<Link to = '/register' />
   const [email, setemail] = useState('')
   const [password, setpassword] = useState('')
+  const [firstname, setfirstname] = useState('')
+  const [lastname, setlastname] = useState('')
+  const [gender, setGender] = useState('')
+
 
 const navigate = useNavigate();
 
+
+
+const handleEmail = e => {
+  setemail(e.target.value)
+  
+}
+
+const handlepassword = e => {
+  setpassword(e.target.value)
+  
+}
+const handlefirstname = e => {
+  setfirstname(e.target.value)
+  
+}
+
+const handlelastname = e => {
+  setlastname(e.target.value)
+  
+}
+const handlegender = e => {
+  setGender(e.target.value)
+ console.log(gender)
+}
+
+const [errorMsg, setErrorMsg] = useState('');
+
+
+
+const checkfeilds = () => {
+ 
+  const values = [firstname, lastname, email, password , gender];
+    let errorMsg = '';
+
+    const allFieldsFilled = values.every((field) => {
+      const value = `${field}`.trim();
+      return value !== '' && value !== '0';
+    }); 
+    if (allFieldsFilled) {
+      
+      console.log('all filled')
+    } else {
+      errorMsg = 'Please fill out all the fields!';
+      
+    }
+    setErrorMsg(errorMsg);
+    
+  };
+
+
+  
+
+
+
+
+
+// const buttonClick = () => {
+//   addNotification({
+//       title: 'Success',
+//       subtitle: 'This is a subtitle',
+//       message: 'User Registered Successfully',
+//       theme: 'darkblue', backgroundTop: 'green', //optional, background color of top container.
+//       backgroundBottom: 'darkgreen', //optional, background color of bottom container.
+//       colorTop: 'green', //optional, font color of top container.
+//       colorBottom: 'darkgreen',
+      
+//       native: true // when using native, your OS will handle theming.
+//   });
+// };
+
 const register = async e => {
+  debugger;
   e.preventDefault();
   try{
     const resp = await auth.createUserWithEmailAndPassword(email, password)
@@ -31,31 +109,9 @@ const register = async e => {
   }
   }
 
-  const signin = async e =>{
-    e.preventDefault();
-    try{
-      const resp = await auth.createUserWithEmailAndPassword(email,password)
-      if (resp) {
-        console.log('resp recived')
-        console.log(resp);
-       const key = resp.user._delegate.accessToken
-       console.log(key)
-       localStorage.setItem('Jwt', key)
-       console.log('signed in')
-    }
-  }
-  catch(error){
-    alert(error.message)
-  }
-  }
-  const handleEmail = e => {
-    setemail(e.target.value)
-  }
 
-  const handlepassword = e => {
-    setpassword(e.target.value)
-  }
 
+  
     const { Option } = Select;
     const [form] = Form.useForm();
     const onFinish = (values) => {
@@ -91,11 +147,13 @@ const register = async e => {
             }
         }
   return (
+    
     <div className='wrap'>
+    
     <LoginWrapper>
         <h2>Sign Up</h2>
         <hr />
-    <Form
+    <Form 
       name="basic"
       labelCol={{
         span: 8,
@@ -114,6 +172,8 @@ const register = async e => {
        
         name="fname"
         label="First Name"
+        value = {firstname}
+        onChange= {handlefirstname}
         rules={[
           {
             
@@ -129,6 +189,8 @@ const register = async e => {
        
         name="lname"
         label="Last Name"
+        value = {lastname}
+        onChange= {handlelastname}
         rules={[
           {
             required: true,
@@ -144,6 +206,7 @@ const register = async e => {
         name="email"
         label="Email"
         value = {email}
+        
         onChange= {handleEmail}
         rules={[
           {
@@ -174,6 +237,8 @@ const register = async e => {
       <Form.Item
         name="gender"
         label="Gender"
+        value = {gender}
+        onChange= {handlegender}
         rules={[
           {
             required: true,
@@ -208,9 +273,13 @@ const register = async e => {
           span: 16,
         }}
       >
-       <Button type='primary' className='btn2' htmlType="submit"  onClick={register}>
+          {errorMsg && <p className="errorMsg">{errorMsg}</p>}
+       <Button type='primary' className='btn2' htmlType="submit" onClick={register}>
           Register
         </Button>
+      
+        <Button onClick={ checkfeilds}>test</Button>
+      
       </Form.Item>
       
     </Form>

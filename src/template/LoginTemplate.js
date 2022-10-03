@@ -3,6 +3,7 @@ import { Appwrapper } from "../components/appwrapper/wrapper.style";
 import { Tempwrapper, Tem } from "./temp.style";
 
 const Template = (props) => {
+  
   const { children } = props;
   return (
     <Appwrapper>
