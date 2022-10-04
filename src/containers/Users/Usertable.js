@@ -1,50 +1,85 @@
-import { Space, Table } from 'antd';
+import { Space, Table, notification } from 'antd';
 import { useState , React , useEffect, useCallback}  from 'react';
 import { Link, useParams , useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Editdata from './Editdata';
-import { Button } from 'antd';
+import { Button , Modal } from 'antd';
+
+
+
+const openNotificationWithIcon = (type) => {
+  notification[type]({
+    message: '',
+    description:
+      'Entry Deleted',
+      duration: 1,
+  });
+};
+
 
 const Usertable = () => {
 <Link to = '/userdata' />
 const [ dataa , setDataa] = useState([]);
+const [open, setOpen] = useState(false);
+const [confirmLoading, setConfirmLoading] = useState(false);
+const [modalText, setModalText] = useState('Are you sure you want to delete?');
+const [selectedId, setselectedId] = useState('')
+const [apistate, setapistate] = useState(false)
+
 const navigate = useNavigate();
 
 
 
+const showModal = () => {
+  setOpen(true);
+};
 
-const fetchData = useCallback(() => {
-  axios.get('https://jsonplaceholder.typicode.com/users')
-  .then(function (response) {
-    // handle success
-    console.log(response);
-    setDataa(response.data);
-  })
-  .catch(function (error) {
+const handleOk = () => {
+
+  setModalText('Are you sure you want to delete?');
+  setConfirmLoading(true);
+   
+  if(apistate == false)
+  {
+    setOpen(false);
+    setConfirmLoading(false);
+  }
+   openNotificationWithIcon('success')
+};
+
+const handleCancel = () => {
+  console.log('Clicked cancel button');
+  setOpen(false);
+};
+
+const fetchData = useCallback( async () => {
+ try{
+  const resp = await axios.get('https://jsonplaceholder.typicode.com/users')
+   // handle success
+   console.log(resp);
+   setDataa(resp.data);
+ }
+  catch(error) {
     // handle error
     console.log(error);
-  })
+  }
 }, []);
 
-const deleteData = useCallback((id) => {
+    const deleteData = useCallback ( async (id) => {
+      try{
+        setapistate(true);
+        const response = await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`,{
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        }})
 
-
-  axios.get(`https://jsonplaceholder.typicode.com/users/${id}`,{
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    }
-  }) 
-  .then(function () {
-    // handle success
-    setDataa((currentData) => {
-      return currentData.filter((x) => x.id !== id);
-    });
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
+        setapistate(false)
+        setDataa((currentData) => {
+          return currentData.filter((x) => x.id !== id);
+        })
+      } catch(error){
+        console.log(error);
+      }
 }, []);
 
 
@@ -57,6 +92,10 @@ const addnewuser = () => {
   navigate ('/adduser')
  }
  
+
+
+
+
 
 
 useEffect(() => {
@@ -93,10 +132,12 @@ const columns = [
     render: (_, record) => (
       <Space size="middle">
         
-        <a 
-        
-        onClick={() => deleteData(record.id)}>  Delete  </a>
-        <a onClick={() => EditData()}>  Edit  </a>
+        <a onClick={() => {
+          showModal();
+          setselectedId(record.id)
+          }}>  Delete  </a>
+     
+        <a onClick={EditData}>  Edit  </a>
       </Space>
     ),
   },
@@ -120,7 +161,24 @@ const columns = [
 
 
 
- return <Table  columns={columns} dataSource={dataa} />;
-}
+ return ( <>
+    <Table  columns={columns} dataSource={dataa} />
+  <Modal
+    title=""
+    open={open}
+    onOk={() => {
+      handleOk();
+      deleteData(selectedId);
+    }}
+    confirmLoading={confirmLoading}
+    onCancel={handleCancel}
+  >
+    <p>{modalText}</p>
+  </Modal>
+</>) 
+ 
+ 
+ 
+};
 
 export default Usertable;

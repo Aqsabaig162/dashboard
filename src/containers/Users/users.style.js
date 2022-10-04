@@ -11,6 +11,9 @@ padding: 2%;
     background-color: pink;
     width: 40%;
     padding: 30px;
+    background: white;
+border-radius: 8px;
+box-shadow: 5px 5px 5px lightblue;
 }
 
 .btn{

@@ -38,7 +38,9 @@ const Layoutmain = (props) => {
 
   const navigate = useNavigate();
 
-
+const users = () => {
+  navigate('/dashboard');
+}
   const { children } = props;
 
   return (
@@ -52,7 +54,7 @@ const Layoutmain = (props) => {
                 src="https://cdn3d.iconscout.com/3d/premium/thumb/dashboard-4730878-3930409.png"
               ></img>
             </div>
-            <div>Users</div>
+            <div className="userside" onClick={users}>Users</div>
           </Container>
         </CustomSider>
         <CustomLayoutc>

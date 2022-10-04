@@ -1,8 +1,16 @@
 import React, { useState ,  useEffect, useCallback } from 'react';
 import {Link} from 'react-router-dom'
-import {Button, Form,Input, Space} from 'antd';
+import {Button, Form,Input, Space, notification} from 'antd';
 import { Wrapperdiv } from './users.style'
 import axios from 'axios';
+
+const openNotificationWithIcon = (type) => {
+  notification[type]({
+    message: '',
+    description:
+      'User Added Successfully',
+  });
+};
 
 
 function AddUser() {
@@ -31,8 +39,9 @@ function AddUser() {
  
    
 
-    const Createuser = useCallback(() => {
-        axios.post('https://jsonplaceholder.typicode.com/users' , {
+    const Createuser = useCallback(async () => {
+      try {
+        const response = await axios.post('https://jsonplaceholder.typicode.com/users' , {
             body: JSON.stringify({
               id: id,
               name: name ,
@@ -43,19 +52,16 @@ function AddUser() {
               'Content-type': 'application/json; charset=UTF-8',
             },
           })
+         // handle success
+         console.log(response);
+         setDataa(response.data);
+         console.log(dataa);
+         openNotificationWithIcon('success')
+       
+      } 
+      catch (error) {
         
-        
-        .then(function (response) {
-          // handle success
-          console.log(response);
-          setDataa(response.data);
-          console.log(dataa);
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        })
-      }, []);
+      }}, []);
 
   return (
     <Wrapperdiv>

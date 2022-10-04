@@ -141,7 +141,7 @@ export const MenuBar = styled.div`
 export const CustomHeader = styled(Header)
 `
 
-background : #219EBC;
+background : #FAFAFA;
 `
 export const CustomLayoutp = styled(Layout)
 `
@@ -172,6 +172,11 @@ export const CustomSider = styled(Sider)
 flex: 1;
 color: white;
 background: #023047;
+
+.userside{
+  cursor: pointer;
+}
+
 `
 export const CustomContent = styled(Content)
 `
@@ -187,6 +192,7 @@ export const CustomSearch = styled(Search)
 `
 width: 60%;
 vertical-align: middle;
+
 `
 export const CustomFooter = styled (Footer) 
 `

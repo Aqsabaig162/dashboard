@@ -1,11 +1,19 @@
 import React from 'react'
 import {LoginWrapper} from "./register.style"
-import {Input, Space , Button , DatePicker , Checkbox, Form, Select } from 'antd';
+import {Input, Space , Button , DatePicker , Checkbox, Form, Select, Divider, notification, } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useNavigate , Link } from 'react-router-dom';
 import { auth } from '../firebase'
 import { useState } from "react";
 // import addNotification from 'react-push-notification';
+
+const openNotificationWithIcon = (type) => {
+  notification[type]({
+    message: '',
+    description:
+      'Registered Successfully',
+  });
+};
 
 
 export default function Register() {
@@ -90,8 +98,12 @@ const checkfeilds = () => {
 //   });
 // };
 
+
+
+
+
 const register = async e => {
-  debugger;
+ 
   e.preventDefault();
   try{
     const resp = await auth.createUserWithEmailAndPassword(email, password)
@@ -103,6 +115,7 @@ const register = async e => {
        
       }
     }
+    openNotificationWithIcon('success')
   }
   catch(error){
     alert(error.message)
@@ -278,7 +291,7 @@ const register = async e => {
           Register
         </Button>
       
-        <Button onClick={ checkfeilds}>test</Button>
+        <Button onClick={checkfeilds}>test</Button>
       
       </Form.Item>
       

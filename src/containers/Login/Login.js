@@ -8,6 +8,18 @@ import { useState } from "react";
 import { auth } from '../firebase'
 import { useDispatch} from 'react-redux'
 import { setLogin } from "../../features/login/loginslice";
+import { notification } from  'antd' ;
+
+
+const openNotificationWithIcon = (type) => {
+  notification[type]({
+    message: '',
+    description:
+      'Logged In Successfully',
+  });
+};
+
+
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -27,9 +39,8 @@ const Login = () => {
        console.log(key)
        localStorage.setItem('Jwt', key)
        console.log('signed in')
-      
-
        dispatch(setLogin(true));
+       openNotificationWithIcon('success')
     }
   }
   catch(error){
