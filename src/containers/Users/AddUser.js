@@ -1,8 +1,12 @@
-import React, { useState ,  useEffect, useCallback } from 'react';
+import React, { useState ,  useCallback } from 'react';
 import {Link} from 'react-router-dom'
 import {Button, Form,Input, Space, notification} from 'antd';
 import { Wrapperdiv } from './users.style'
 import axios from 'axios';
+import { ThemeContext } from 'styled-components';
+
+
+export const AdduserContext = React.createContext()
 
 const openNotificationWithIcon = (type) => {
   notification[type]({
@@ -14,71 +18,78 @@ const openNotificationWithIcon = (type) => {
 
 
 function AddUser() {
-  const [id, setid] = useState('')
-  const [name, setname] = useState('')
-  const [username, setusername] = useState('')
-  const [email, setemail] = useState('')
-  const [ dataa , setDataa] = useState([]);
+  const [Id, setId] = useState('')
+  const [Name, setName] = useState('')
+  const [Username, setUsername] = useState('')
+  const [Email, setEmail] = useState('')
+  const [ adduserdata , setadduserdata] = useState([]);
   <Link to = '/adduser' />
 
 
 
   const handleid = e => {
-    setid(e.target.value)  
+    setId(e.target.value)  
   }
   const handleusername = e => {
-    setusername(e.target.value)  
+    setUsername(e.target.value)  
   }
   const handleemail = e => {
-    setemail(e.target.value)  
+    setEmail(e.target.value)  
   }
   const handlename = e => {
-    setname(e.target.value)  
+    setName(e.target.value)  
   }
 
  
    
 
     const Createuser = useCallback(async () => {
+     
       try {
         const response = await axios.post('https://jsonplaceholder.typicode.com/users' , {
-            body: JSON.stringify({
-              id: id,
-              name: name ,
-              username:username,
-              email: email,
-            }),
+          body: JSON.stringify({
+             id: 1,
+             name: 'aqsa',
+             username: 'aqsa91',
+             email: 'aqsa@gmail.com',
+          }),
             headers: {
               'Content-type': 'application/json; charset=UTF-8',
             },
+            
           })
          // handle success
+         
          console.log(response);
-         setDataa(response.data);
-         console.log(dataa);
+         setadduserdata(response.data);
+         
          openNotificationWithIcon('success')
-       
+         
       } 
+      
       catch (error) {
         
       }}, []);
-
+      console.log(adduserdata);
   return (
+
+    <>
+    <ThemeContext.Provider   value={{ adduserdata }}>
     <Wrapperdiv>
     <div className='wrap'>
     <Space direction='vertical'>
    <Form >
     
-    <Form.Item label="Id"  value = {id} onChange= {handleid}>
+    <Form.Item label="Id"  value = {Id} onChange= {handleid}>
     <Input />
     </Form.Item>
-    <Form.Item label="Name"  value = {name} onChange= {handlename}>
+    <Form.Item label="Name"  value = {Name} onChange= {handlename}>
     <Input />
     </Form.Item>
-    <Form.Item label="Username"  value = {username} onChange= {handleusername}>
+    <Form.Item label="Username"  value = {Username} onChange= {handleusername}>
     <Input />
     </Form.Item>
-    <Form.Item label="Email" value = {email} onChange= {handleemail}>
+    <Form.Item label="Email" value = {Email} onChange= {handleemail}>
     <Input />
     </Form.Item>
     <Form.Item  className='btn'>
@@ -88,6 +99,8 @@ function AddUser() {
    </Space>
    </div>
    </Wrapperdiv>
+   </ThemeContext.Provider>
+   </>
   )
 }
 

@@ -42,7 +42,7 @@ const privateRoutes = [
  {
   component: <AddUser />,
   path: '/adduser'
- }
+  }
 ];
 
 const AppRoutes = () => {
@@ -68,6 +68,9 @@ const AppRoutes = () => {
     </Routes>
   );
 };
+
+
+
 const renderPrivateRoutes = () => {
   return privateRoutes.map((item) => (
     <Route

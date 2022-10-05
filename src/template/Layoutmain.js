@@ -13,15 +13,19 @@ import {
 import { Dropdown, Menu, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-
+import { setLogin } from "../features/login/loginslice";
+import { useDispatch } from "react-redux";
 
 
 const onSearch = (value) => console.log(value);
 const Layoutmain = (props) => {
+const dispatch = useDispatch()
 
 
   const signout = () => {
+    dispatch(setLogin(false));
     navigate("/");
+    localStorage.clear();
   };
 
 

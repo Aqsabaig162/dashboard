@@ -1,9 +1,12 @@
 import { Space, Table, notification } from 'antd';
-import { useState , React , useEffect, useCallback}  from 'react';
+import { useState , React , useEffect, useCallback , useContext}  from 'react';
 import { Link, useParams , useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Editdata from './Editdata';
 import { Button , Modal } from 'antd';
+import { AdduserContext } from './AddUser';
+
+
 
 
 
@@ -27,7 +30,7 @@ const [selectedId, setselectedId] = useState('')
 const [apistate, setapistate] = useState(false)
 
 const navigate = useNavigate();
-
+const adduserdata = useContext(AdduserContext);
 
 
 const showModal = () => {
@@ -58,6 +61,7 @@ const fetchData = useCallback( async () => {
    // handle success
    console.log(resp);
    setDataa(resp.data);
+   console.log(dataa)
  }
   catch(error) {
     // handle error
@@ -100,6 +104,7 @@ const addnewuser = () => {
 
 useEffect(() => {
     fetchData()
+    console.log(adduserdata)
 }, [])
 
 
@@ -162,7 +167,7 @@ const columns = [
 
 
  return ( <>
-    <Table  columns={columns} dataSource={dataa} />
+    <Table  columns={columns} dataSource={dataa} scroll={{y:269}} />
   <Modal
     title=""
     open={open}

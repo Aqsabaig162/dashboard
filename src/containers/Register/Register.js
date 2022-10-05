@@ -59,7 +59,7 @@ const [errorMsg, setErrorMsg] = useState('');
 
 const checkfeilds = () => {
  
-  const values = [firstname, lastname, email, password , gender];
+  const values = [firstname, lastname, email, password ];
     let errorMsg = '';
 
     const allFieldsFilled = values.every((field) => {
@@ -76,31 +76,6 @@ const checkfeilds = () => {
     setErrorMsg(errorMsg);
     
   };
-
-
-  
-
-
-
-
-
-// const buttonClick = () => {
-//   addNotification({
-//       title: 'Success',
-//       subtitle: 'This is a subtitle',
-//       message: 'User Registered Successfully',
-//       theme: 'darkblue', backgroundTop: 'green', //optional, background color of top container.
-//       backgroundBottom: 'darkgreen', //optional, background color of bottom container.
-//       colorTop: 'green', //optional, font color of top container.
-//       colorBottom: 'darkgreen',
-      
-//       native: true // when using native, your OS will handle theming.
-//   });
-// };
-
-
-
-
 
 const register = async e => {
  
@@ -287,11 +262,14 @@ const register = async e => {
         }}
       >
           {errorMsg && <p className="errorMsg">{errorMsg}</p>}
-       <Button type='primary' className='btn2' htmlType="submit" onClick={register}>
+       <Button type='primary' className='btn2' htmlType="submit" onClick=  { (event) => {
+         checkfeilds();
+         register(event);
+       } }>
           Register
         </Button>
       
-        <Button onClick={checkfeilds}>test</Button>
+       
       
       </Form.Item>
       

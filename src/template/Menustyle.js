@@ -198,7 +198,7 @@ export const CustomFooter = styled (Footer)
 `
 display: flex;
 justify-content: center;
-background: white;
+background: #FAFAFA;
 `
 
 export const Container = styled.div 
