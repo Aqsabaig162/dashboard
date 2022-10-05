@@ -3,7 +3,6 @@ import { LoginWrapper } from "./login.style";
 import { Input, Space, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
-import {signin, handleEmail , handlepassword} from '../Register/Register'
 import { useState } from "react";
 import { auth } from '../firebase'
 import { useDispatch} from 'react-redux'
