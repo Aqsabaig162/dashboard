@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 
-<Link  to = '/editdata' />
+<Link  to = '/dashboard/editdata' />
 const openNotificationWithIcon = (type) => {
   notification[type]({
     message: '',
@@ -22,7 +22,6 @@ function Editdata() {
   const [username, setusername] = useState('')
   const [email, setemail] = useState('')
   const [ dataa , setDataa] = useState([]);
-  <Link to = '/adduser' />
 
 
 

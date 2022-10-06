@@ -14,10 +14,7 @@ import Editdata from "../containers/Users/Editdata";
 import { Notifications } from 'react-push-notification';
 import { useSelector } from "react-redux";
 import AddUser from "../containers/Users/AddUser";
-
-
-
-
+import UsersContext from "../containers/Users";
 
 const publicRoutes = [
   {
@@ -32,18 +29,28 @@ const publicRoutes = [
 
 const privateRoutes = [
  {
-  component: <Usertable />,
-  path : "/dashboard",
+  component: <UsersContext><Usertable /></UsersContext>,
+  index: true,
  },
  {
-  component: <Editdata />,
-  path : "/editdata",
- },
- {
-  component: <AddUser />,
-  path: '/adduser'
-  }
+   component: <UsersContext><Editdata /></UsersContext>,
+   path : "editdata",
+  },
+  {
+   component: <UsersContext><AddUser /></UsersContext>,
+   path: 'adduser',
+   }
 ];
+
+const RouteWithSubRoutes = (privateRoutes) => {
+  return (
+  <Route
+      path={privateRoutes.path}
+      render={(props) => (
+          <privateRoutes.component {...props} routes={privateRoutes.routes} />
+      )}/>
+  )
+}
 
 const AppRoutes = () => {
 
@@ -63,7 +70,7 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-    {renderPublicRoutes()}
+      {renderPublicRoutes()}
       {renderPrivateRoutes()}
     </Routes>
   );
@@ -71,19 +78,24 @@ const AppRoutes = () => {
 
 
 
-const renderPrivateRoutes = () => {
-  return privateRoutes.map((item) => (
-    <Route
-      key={item.path}
-      path={item.path}
-      element={<Layoutmain>{item.component}</Layoutmain>}
-    />
-  ));
-};
+const renderPrivateRoutes = () => (
+  <Route
+      key={"dashboard"}
+      path={"dashboard"}
+      element={<Layoutmain />}
+    >
+      {privateRoutes.map((item) => (
+        <Route
+          key={item.path}
+          path={item.path}
+          index={item.index}
+          element={item.component}
+        />
+      ))}
+    </Route>
+);
+
 const renderPublicRoutes = () => {
-
-
-  
   return publicRoutes.map((item) => (
     <Route
       key={item.path}

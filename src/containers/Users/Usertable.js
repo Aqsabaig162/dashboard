@@ -4,11 +4,7 @@ import { Link, useParams , useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Editdata from './Editdata';
 import { Button , Modal } from 'antd';
-import { AdduserContext } from './AddUser';
-
-
-
-
+import {UserContext} from '.';
 
 const openNotificationWithIcon = (type) => {
   notification[type]({
@@ -21,16 +17,16 @@ const openNotificationWithIcon = (type) => {
 
 
 const Usertable = () => {
-<Link to = '/userdata' />
 const [ dataa , setDataa] = useState([]);
 const [open, setOpen] = useState(false);
 const [confirmLoading, setConfirmLoading] = useState(false);
 const [modalText, setModalText] = useState('Are you sure you want to delete?');
 const [selectedId, setselectedId] = useState('')
 const [apistate, setapistate] = useState(false)
+const { addUserData, setaddUserData} = useContext(UserContext);
 
 const navigate = useNavigate();
-const adduserdata = useContext(AdduserContext);
+
 
 
 const showModal = () => {
@@ -62,6 +58,11 @@ const fetchData = useCallback( async () => {
    console.log(resp);
    setDataa(resp.data);
    console.log(dataa)
+   console.log(addUserData)
+   const newid = addUserData.id
+  //  setDataa((currentData) => {
+  //   return currentData.push(addUserData);
+  // })
  }
   catch(error) {
     // handle error
@@ -89,22 +90,16 @@ const fetchData = useCallback( async () => {
 
 
  const EditData = () => {
- navigate ('/editdata')
+ navigate ('/dashboard/editdata')
 }
 
 const addnewuser = () => {
-  navigate ('/adduser')
+  navigate ('/dashboard/adduser')
  }
  
-
-
-
-
-
-
 useEffect(() => {
     fetchData()
-    console.log(adduserdata)
+   
 }, [])
 
 
@@ -167,7 +162,7 @@ const columns = [
 
 
  return ( <>
-    <Table  columns={columns} dataSource={dataa} scroll={{y:269}} />
+    <Table rowKey={(row) => row.id}  columns={columns} dataSource={dataa} scroll={{y:269}} />
   <Modal
     title=""
     open={open}

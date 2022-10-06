@@ -12,13 +12,13 @@ import {
 } from "./Menustyle";
 import { Dropdown, Menu, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { setLogin } from "../features/login/loginslice";
 import { useDispatch } from "react-redux";
 
 
 const onSearch = (value) => console.log(value);
-const Layoutmain = (props) => {
+const Layoutmain = () => {
 const dispatch = useDispatch()
 
 
@@ -45,7 +45,6 @@ const dispatch = useDispatch()
 const users = () => {
   navigate('/dashboard');
 }
-  const { children } = props;
 
   return (
     <>
@@ -85,7 +84,7 @@ const users = () => {
               </Col>
             </Row>
           </CustomHeader>
-          <CustomContent>{children}</CustomContent>
+          <CustomContent><Outlet /></CustomContent>
           <CustomFooter>© Dashboard</CustomFooter>
         </CustomLayoutc>
       </CustomLayoutp>
