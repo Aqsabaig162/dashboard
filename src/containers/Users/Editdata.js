@@ -72,17 +72,17 @@ function Editdata() {
     <Space direction='vertical'>
    <Form >
     
-    <Form.Item label="Id"  value = {id} onChange= {handleid}>
-    <Input />
+    <Form.Item  value = {id} onChange= {handleid}>
+    <Input placeholder='Enter Id'/>
     </Form.Item>
-    <Form.Item label="Name"  value = {name} onChange= {handlename}>
-    <Input />
+    <Form.Item  value = {name} onChange= {handlename}>
+    <Input placeholder='Enter Name' />
     </Form.Item>
-    <Form.Item label="Username"  value = {username} onChange= {handleusername}>
-    <Input />
+    <Form.Item  value = {username} onChange= {handleusername}>
+    <Input placeholder='Enter Username'/>
     </Form.Item>
-    <Form.Item label="Email" value = {email} onChange= {handleemail}>
-    <Input />
+    <Form.Item value = {email} onChange= {handleemail}>
+    <Input placeholder='Enter Email' />
     </Form.Item>
     <Form.Item  className='btn'>
     <Button type='primary' onClick={Createuser}> Update</Button>

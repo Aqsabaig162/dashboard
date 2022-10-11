@@ -3,8 +3,10 @@ import { useState , React , useEffect, useCallback , useContext}  from 'react';
 import { Link, useParams , useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Editdata from './Editdata';
-import { Button , Modal } from 'antd';
+import { Button , Modal} from 'antd';
+import { DeleteTwoTone , EditTwoTone } from  '@ant-design/icons';
 import {UserContext} from '.';
+import { Btnstyle } from './users.style';
 
 const openNotificationWithIcon = (type) => {
   notification[type]({
@@ -23,7 +25,7 @@ const [confirmLoading, setConfirmLoading] = useState(false);
 const [modalText, setModalText] = useState('Are you sure you want to delete?');
 const [selectedId, setselectedId] = useState('')
 const [apistate, setapistate] = useState(false)
-const { addUserData, setaddUserData} = useContext(UserContext);
+const { addUserData } = useContext(UserContext);
 
 const navigate = useNavigate();
 
@@ -55,11 +57,17 @@ const fetchData = useCallback( async () => {
  try{
   const resp = await axios.get('https://jsonplaceholder.typicode.com/users')
    // handle success
-   console.log(resp);
-   setDataa(resp.data);
-   console.log(dataa)
-   console.log(addUserData)
-   const newid = addUserData.id
+  
+   let data = resp.data;
+   if(addUserData){
+    data.push(JSON.parse(addUserData?.body))
+   }
+   console.log(data);
+   setDataa(data);
+  //  console.log(dataa)
+  //  console.log(addUserData)
+  //  debugger;
+  //  const newid = addUserData.id
   //  setDataa((currentData) => {
   //   return currentData.push(addUserData);
   // })
@@ -114,16 +122,19 @@ const columns = [
     title: 'name',
     dataIndex: 'name',
     key: 'name',
+     responsive: ['md'],
   },
   {
     title: 'username',
     dataIndex: 'username',
-    key: 'username'
+    key: 'username',
+    responsive: ['lg'],
   }, 
   {
     title: 'email',
     dataIndex: 'email',
     key: 'email',
+    responsive: ['lg'],
   },
   
    {
@@ -135,19 +146,13 @@ const columns = [
         <a onClick={() => {
           showModal();
           setselectedId(record.id)
-          }}>  Delete  </a>
+          }}>  <DeleteTwoTone />   </a>
      
-        <a onClick={EditData}>  Edit  </a>
+        <a onClick={EditData}> <EditTwoTone /></a>
       </Space>
     ),
   },
-  {
-    title: <Button type="primary" onClick={ () => addnewuser() }  >Add new user</Button> ,
-    key: 'key',
-    dataIndex: 'key',
-  
-  },
-
+ 
 ];
 
 
@@ -162,7 +167,10 @@ const columns = [
 
 
  return ( <>
-    <Table rowKey={(row) => row.id}  columns={columns} dataSource={dataa} scroll={{y:269}} />
+  <Btnstyle>
+ <Button type="primary" onClick={ () => addnewuser() }  >Add new user</Button>
+ </Btnstyle>
+    <Table rowKey={(row) => row.id}  columns={columns} dataSource={dataa} scroll={{y:"62vh"}} />
   <Modal
     title=""
     open={open}

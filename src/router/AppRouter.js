@@ -15,6 +15,17 @@ import { Notifications } from 'react-push-notification';
 import { useSelector } from "react-redux";
 import AddUser from "../containers/Users/AddUser";
 import UsersContext from "../containers/Users";
+import { notification } from  'antd' ;
+import UserProfile from "../containers/Users/UserProfile";
+
+
+const openNotificationWithIcon = (type) => {
+  notification[type]({
+    message: '',
+    description:
+      'Unautherized Access!',
+  });
+};
 
 const publicRoutes = [
   {
@@ -39,6 +50,10 @@ const privateRoutes = [
   {
    component: <UsersContext><AddUser /></UsersContext>,
    path: 'adduser',
+   },
+   {
+    component:  <UsersContext><UserProfile /></UsersContext>,
+    path: 'profile'
    }
 ];
 
@@ -57,11 +72,28 @@ const AppRoutes = () => {
   const navigate = useNavigate();
 
   const {isLoggedin , userInfo} = useSelector((state) => state);
+  
+  const statee = isLoggedin;
+  localStorage.setItem("state", statee );
+
   useEffect(() => {
-    if(isLoggedin && (localStorage.getItem('Jwt'))) {
+   
+    if((isLoggedin == true)&& (localStorage.getItem('Jwt'))) {
       
       navigate('/dashboard');
-    } else {
+    } 
+    else if((isLoggedin == false) && (!localStorage.getItem('Jwt')))
+    {
+      
+      navigate('/');
+     
+    }
+    
+    else if(isLoggedin || (localStorage.getItem('state')))
+    {
+      console.log('staying signed in')
+    }
+    else {
       navigate('/');
     } 
   }, [isLoggedin]);

@@ -1,13 +1,14 @@
 import React from "react";
 import { LoginWrapper } from "./login.style";
 import { Input, Space, Button } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { UserOutlined ,LockOutlined} from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { auth } from '../firebase'
 import { useDispatch} from 'react-redux'
 import { setLogin } from "../../features/login/loginslice";
 import { notification } from  'antd' ;
+
 
 
 const openNotificationWithIcon = (type) => {
@@ -25,7 +26,7 @@ const Login = () => {
   const [email, setemail] = useState('')
   const [password, setpassword] = useState('')
   const navigate = useNavigate();
-  // <Link to="/login" />;
+
  
   const signin = async (e) =>{
     e.preventDefault();
@@ -73,7 +74,9 @@ const Login = () => {
             prefix={<UserOutlined />}
           />
 
-          <Input.Password size="large" placeholder="Input password" value={password} onChange= {handlepassword}/>
+          <Input.Password size="large" placeholder="Input password" value={password} onChange= {handlepassword}
+           prefix={<LockOutlined className="site-form-item-icon" />}
+          />
           <br/>
           <Button type="primary" className="btn" onClick={(e) => signin(e)} >
             Log in

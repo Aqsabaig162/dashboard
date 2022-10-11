@@ -5,6 +5,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
     "antd": "^4.23.2",
+    "antd-img-crop": "^4.2.5",
     "axios": "^0.27.2",
     "cra-template": "1.2.0",
     "firebase": "^9.10.0",

@@ -5,6 +5,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { useNavigate , Link } from 'react-router-dom';
 import { auth } from '../firebase'
 import { useState } from "react";
+import { useDispatch} from 'react-redux'
 // import addNotification from 'react-push-notification';
 
 const openNotificationWithIcon = (type) => {
@@ -17,8 +18,7 @@ const openNotificationWithIcon = (type) => {
 
 
 export default function Register() {
-  
-<Link to = '/register' />
+
   const [email, setemail] = useState('')
   const [password, setpassword] = useState('')
   const [firstname, setfirstname] = useState('')
@@ -41,7 +41,7 @@ const handlepassword = e => {
 }
 const handlefirstname = e => {
   setfirstname(e.target.value)
-  
+  localStorage.setItem("firstname", firstname);
 }
 
 const handlelastname = e => {
@@ -79,6 +79,8 @@ const checkfeilds = () => {
 
 const register = async e => {
  
+  
+
   e.preventDefault();
   try{
     const resp = await auth.createUserWithEmailAndPassword(email, password)
@@ -88,6 +90,11 @@ const register = async e => {
         console.log('registered')
         navigate('/');
        
+        localStorage.setItem("firstname", firstname);
+        localStorage.setItem("lastname", lastname);
+        localStorage.setItem("email", email);
+        localStorage.setItem("password", password);
+        localStorage.setItem("gender", gender)
       }
     }
     openNotificationWithIcon('success')

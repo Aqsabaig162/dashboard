@@ -1,5 +1,6 @@
 import { Row, Col } from "antd";
 import React from "react";
+import { useState , useEffect} from "react";
 import {
   CustomHeader,
   CustomLayoutp,
@@ -15,26 +16,45 @@ import { UserOutlined } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
 import { setLogin } from "../features/login/loginslice";
 import { useDispatch } from "react-redux";
+import { IdcardTwoTone , RightCircleTwoTone } from  '@ant-design/icons';
 
 
 const onSearch = (value) => console.log(value);
 const Layoutmain = () => {
+
+const [collapsed, setCollapsed] = useState(false);
+const [firstname, setfirstname] = useState('')
+
 const dispatch = useDispatch()
+useEffect(() => {
 
-
+  
+  setfirstname(localStorage.getItem("firstname"))
+  
+}, [])
+console.log (firstname)   
   const signout = () => {
     dispatch(setLogin(false));
     navigate("/");
-    localStorage.clear();
+    localStorage.removeItem("Jwt");
+   
   };
 
+const profile = () => {
+  navigate('/dashboard/profile')
+}
 
   const menu = (
-    < Menu  onClick={() => signout()}
+    < Menu  
       items={[
-        {
+       
+        { 
           key: "1",
-          label: <a>Sign out</a>,
+          label: <a onClick={() => signout()}> <RightCircleTwoTone /> Sign out</a>,
+        },
+        {
+          key: "2",
+          label: <a onClick={() => profile()}> <IdcardTwoTone /> Hello {firstname}!</a>,
         },
       ]}
     />
@@ -43,13 +63,17 @@ const dispatch = useDispatch()
   const navigate = useNavigate();
 
 const users = () => {
+  
   navigate('/dashboard');
 }
 
+
+
   return (
+    
     <>
       <CustomLayoutp>
-        <CustomSider>
+        <CustomSider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
           <Container>
             <div>
               <img
@@ -63,21 +87,24 @@ const users = () => {
         <CustomLayoutc>
           <CustomHeader>
             <Row justify="space-between" align="middle">
-              <Col span={20}>
+              <Col span={18}>
                 <CustomSearch
-                  placeholder="input search text"
+                  placeholder=""
                   onSearch={onSearch}
                   enterButton
                 />
+                 
               </Col>
-              <Col span={4} className="right">
+             
+              
+              <Col span={2} className="right">
                 <Dropdown overlay={menu}>
                   <a onClick={(e) => e.preventDefault()}>
+                    
+                      
                     <Space>
-                      <UserOutlined
-                        className="icon"
-                        
-                      />
+                    
+                      <UserOutlined className="icon" />
                     </Space>
                   </a>
                 </Dropdown>

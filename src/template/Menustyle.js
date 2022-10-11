@@ -140,8 +140,12 @@ export const MenuBar = styled.div`
 `
 export const CustomHeader = styled(Header)
 `
-
 background : #FAFAFA;
+h4{
+  color: #40A9FF;
+  cursor : pointer;
+}
+
 `
 export const CustomLayoutp = styled(Layout)
 `
@@ -169,6 +173,10 @@ background: grey;
 `
 export const CustomSider = styled(Sider)
 `
+
+
+
+
 flex: 1;
 color: white;
 background: #023047;
