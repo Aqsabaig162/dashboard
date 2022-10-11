@@ -4,11 +4,22 @@ import './index.css';
 //import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.min.css';
 import AppRouter from './router/AppRouter';
-import Layoutmain from './template/Layoutmain';
-import Usertable from './containers/Users/Usertable';
-import Register from './containers/Register/Register';
 import { store } from "./store/store";
 import { Provider } from "react-redux";
+import axios from 'axios';
+
+
+axios.interceptors.request.use( (request) => {
+console.log(request)
+const a = localStorage.getItem("Jwt")
+request.headers.channelName = "application/json" ;
+request.headers.Jwttokken = a ;
+
+  return(request)
+
+
+})
+
 
 
 

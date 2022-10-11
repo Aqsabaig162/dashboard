@@ -173,16 +173,12 @@ background: grey;
 `
 export const CustomSider = styled(Sider)
 `
-
-
-
-
-flex: 1;
-color: white;
-background: #023047;
-
-.userside{
-  cursor: pointer;
+.logo1{
+  width: 80px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 `

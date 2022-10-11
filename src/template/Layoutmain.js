@@ -11,13 +11,13 @@ import {
   CustomFooter,
   Container,
 } from "./Menustyle";
-import { Dropdown, Menu, Space } from "antd";
+import { Dropdown, Menu, Space , Layout } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
 import { setLogin } from "../features/login/loginslice";
 import { useDispatch } from "react-redux";
 import { IdcardTwoTone , RightCircleTwoTone } from  '@ant-design/icons';
-
+const { Sider } = Layout;
 
 const onSearch = (value) => console.log(value);
 const Layoutmain = () => {
@@ -73,7 +73,7 @@ const users = () => {
     
     <>
       <CustomLayoutp>
-        <CustomSider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+        {/* <CustomSider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
           <Container>
             <div>
               <img
@@ -83,7 +83,24 @@ const users = () => {
             </div>
             <div className="userside" onClick={users}>Users</div>
           </Container>
-        </CustomSider>
+        </CustomSider> */}
+        <CustomSider collapsible collapsed={collapsed}onCollapse={(value) => setCollapsed(value)}>
+        <div className="logo">
+        <img className="logo1"  src="https://cdn3d.iconscout.com/3d/premium/thumb/dashboard-4730878-3930409.png" /> 
+        </div>
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={['0']}
+          items={[
+            {
+              key: '1',
+              icon: <UserOutlined />,
+              label: <a onClick={ () =>  users() } > Users </a>  ,
+            },
+          ]}
+        />
+      </CustomSider>
         <CustomLayoutc>
           <CustomHeader>
             <Row justify="space-between" align="middle">

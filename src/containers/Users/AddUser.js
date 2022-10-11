@@ -1,5 +1,5 @@
   import React, { useState, useCallback , useContext , useEffect} from "react";
-  import { Link,useNavigate } from "react-router-dom";
+  import { useNavigate } from "react-router-dom";
   import { Button, Form, Input, Space, notification, message } from "antd";
   import { Wrapperdiv } from "./users.style";
   import axios from "axios";
@@ -50,7 +50,11 @@
       setName(e.target.value);
     };
 
+    console.log(Id )
+    console.log(Name)
+    console.log(Email)
     const Createuser = useCallback(async () => {
+      
       try {
         const response = await axios.post(
           "https://jsonplaceholder.typicode.com/users",
@@ -99,7 +103,7 @@
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your Id!',
+                    
                   },
                   
                 ]}
@@ -118,7 +122,7 @@
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your Name!',
+                     
                     },
                     
                   ]}
@@ -137,7 +141,7 @@
                     rules={[
                       {
                         required: true,
-                        message: 'Please input your Username!',
+                        
                       },
                       
                     ]}
@@ -156,7 +160,7 @@
                       rules={[
                         {
                           required: true,
-                          message: 'Please input your email!',
+                          
                         },
           
                       ]}
@@ -164,30 +168,14 @@
                       </div>
                     <div><Input /></div>
                   </div>
-                  
-                  <Form.Item shouldUpdate>
-          {() => (
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={
-                !form.isFieldsTouched(true) ||
-                !!form.getFieldsError().filter(({ errors }) => errors.length).length
-              }
-            >
-              Log in
-            </Button>
-          )}
+                 
 
-          
-      </Form.Item>
-
-                  {/* <Form.Item className="btn">
-                    <Button type="primary" onClick={() => Createuser}  htmlType="submit">
+                  <Form.Item className="btn">
+                    <Button type="primary" onClick={() => Createuser()}  htmlType="submit">
                     Add User
                     </Button>
                     
-                  </Form.Item>  */}
+                  </Form.Item> 
                 </Form>
               </Space>
             </div>

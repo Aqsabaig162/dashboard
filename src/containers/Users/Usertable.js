@@ -64,13 +64,6 @@ const fetchData = useCallback( async () => {
    }
    console.log(data);
    setDataa(data);
-  //  console.log(dataa)
-  //  console.log(addUserData)
-  //  debugger;
-  //  const newid = addUserData.id
-  //  setDataa((currentData) => {
-  //   return currentData.push(addUserData);
-  // })
  }
   catch(error) {
     // handle error
@@ -82,9 +75,7 @@ const fetchData = useCallback( async () => {
       try{
         setapistate(true);
         const response = await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`,{
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        }})
+       })
 
         setapistate(false)
         setDataa((currentData) => {
