@@ -37,7 +37,7 @@ console.log (firstname)
     dispatch(setLogin(false));
     navigate("/");
     localStorage.removeItem("Jwt");
-   
+    localStorage.removeItem("pfp");
   };
 
 const profile = () => {

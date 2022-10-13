@@ -3,9 +3,9 @@ import { Layout} from 'antd';
 import { CustomBreadcrumb , ProfileWrapper , CustomContent} from './users.style';
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
-import { Input, Space, Button } from "antd";
+import { Input, Space, Button , message } from "antd";
 import { Card } from 'antd';
-
+import { DeleteOutlined , EditOutlined } from  '@ant-design/icons';
 
 
 const UserProfile = () => {
@@ -13,6 +13,8 @@ const UserProfile = () => {
   const [password, setpassword] = useState('')
   const [firstname, setfirstname] = useState('')
   const [lastname, setlastname] = useState('')
+  const [imgsrc, setimgsrc] = useState('https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg')
+
   const [fileList, setFileList] = useState([
     {
       uid: '-1',
@@ -23,11 +25,17 @@ const UserProfile = () => {
   ]);
 
   const onChange = ({ fileList: newFileList }) => {
+
+
+    
     setFileList(newFileList);
+    localStorage.setItem("Pfp", newFileList);
   };
 
   const onPreview = async (file) => {
+    
     let src = file.url;
+   
 
     if (!src) {
       src = await new Promise((resolve) => {
@@ -45,13 +53,51 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-
-  
+    
+    setimgsrc(localStorage.getItem("pfp"))
     setfirstname(localStorage.getItem("firstname"))
     setlastname(localStorage.getItem("lastname"))
     setemail(localStorage.getItem("email"))
     setpassword(localStorage.getItem("password"))
   }, [])
+
+
+  const convertBase64 = (file) => {
+
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file)
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      }
+      fileReader.onerror = (error) => {
+        reject(error);
+      }
+    })
+  }
+
+  const handleFileRead = async (event) => {
+    
+   
+    
+      const file = event.target.files[0]
+      const base64 = await convertBase64(file)
+      console.log(base64)
+      setimgsrc(base64)
+    
+   
+  }
+ 
+
+  const handledelete = () => {
+    setimgsrc('https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg')
+  }
+
+const handlebutton = () => {
+  localStorage.setItem("pfp", imgsrc );
+  message.success("Data saved successfully!");
+}
+
 
   return (
     <Layout className="layout">
@@ -71,8 +117,14 @@ const UserProfile = () => {
       <div className="site-layout-content midinfo" >
         <ProfileWrapper>
           <div className='profile'>
-       
-          <ImgCrop rotate>
+          <Card 
+         size="small"
+        
+         style={{
+        width: 300,
+         }}> 
+
+        {/* <ImgCrop rotate>
       <Upload
         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         listType="picture-card"
@@ -80,9 +132,44 @@ const UserProfile = () => {
         onChange={onChange}
         onPreview={onPreview}
       >
-        {fileList.length == 0 && '+ Upload'}
+        {fileList.length < 1 && '+ Upload'}
       </Upload>
-    </ImgCrop>
+    </ImgCrop> */}
+          <div>
+            <Card 
+             size="small"
+              style={{
+             width: 100,
+             height: 100,
+             
+              }}> 
+
+              <div className='pfp'>
+              
+             {imgsrc && <img  className='image' src={imgsrc} />}
+             <div class="middle">
+             <div><DeleteOutlined  onClick={ () => handledelete() }  /></div>
+             <div><EditOutlined style={{ cursor: 'pointer'}} />
+             <input className='imgclass'
+                id="originalFileName"
+                type="file"
+                required
+                label="Document"
+                name="originalFileName"
+                onChange={e => handleFileRead(e)} 
+                />
+             </div>
+              </div>
+             </div>
+              
+           
+
+            </Card>
+            </div>
+            <div>
+            <Button  type='primary' onClick={ () => handlebutton() } > Save </Button>
+            </div>
+             </Card>
           </div>
          <div className='userinfo'>
          <Card

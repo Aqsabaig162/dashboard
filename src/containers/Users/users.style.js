@@ -16,7 +16,7 @@ padding: 2%;
     padding: 30px;
     background: white;
 border-radius: 8px;
-box-shadow: 5px 5px 5px lightblue;
+box-shadow: 5px 5px 5px #d1d7da;
 display: flex;
 justify-content: center;
 }
@@ -61,6 +61,31 @@ box-shadow: 5px 5px 5px #d1d7da;
     justify-content: center;
 }
 
+.pfp{
+    height: 100%;
+    width: 100%;
+
+}
+
+
+.pfp:hover .image {
+    opacity: 0.3;
+  }
+  
+  .pfp:hover .middle {
+    opacity: 1;
+    display: flex;
+    gap: 12px;
+  }
+  
+
+.ant-card-body{
+    height: 100%;
+}
+
+
+.
+
 `
 
 export const CustomContent = styled (Content)
@@ -69,4 +94,43 @@ export const CustomContent = styled (Content)
     display: flex;
     justify-content: center;
 }
+
+input{
+
+   opacity: 1%;
+   position: absolute;
+   cursor: pointer;
+   
+}
+
+img{
+    width: 100%;
+    height: 100px;
+   
+   
+    cursor: pointer;
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .ant-card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
 `

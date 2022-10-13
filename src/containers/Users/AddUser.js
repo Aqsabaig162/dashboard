@@ -1,188 +1,195 @@
-  import React, { useState, useCallback , useContext , useEffect} from "react";
-  import { useNavigate } from "react-router-dom";
-  import { Button, Form, Input, Space, notification, message } from "antd";
-  import { Wrapperdiv } from "./users.style";
-  import axios from "axios";
-  import {UserContext} from '.';
+import React, { useState, useCallback, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, Form, Input, Space, notification, message } from "antd";
+import { Wrapperdiv } from "./users.style";
+import axios from "axios";
+import { UserContext } from ".";
 
+const openNotificationWithIcon = (type) => {
+  notification[type]({
+    message: "",
+    description: "User Added Successfully",
+  });
+};
 
-  const openNotificationWithIcon = (type) => {
-    notification[type]({
-      message: "",
-      description: "User Added Successfully",
-    });
+function AddUser() {
+  const [id, setid] = useState("");
+  const [name, setname] = useState("");
+  const [username, setusername] = useState("");
+  const [email, setemail] = useState("");
+  const { addUserData, setaddUserData } = useContext(UserContext);
+  const [form] = Form.useForm();
+  let count = 0;
+ 
+  const navigate = useNavigate();
+  const handleId = (e) => {
+ 
+    setid(e.target.value);
   };
 
-  function AddUser() {
-    const [Id, setId] = useState("");
-    const [Name, setName] = useState("");
-    const [Username, setUsername] = useState("");
-    const [Email, setEmail] = useState("");
-    const { addUserData, setaddUserData} = useContext(UserContext);
-    const [form] = Form.useForm();
-    const [, forceUpdate] = useState({});
+  const handleUsername = (e) => {
+   
+    setusername(e.target.value);
+  };
 
+  const handleEmail = (e) => {
+    setemail(e.target.value);
+  };
+  const handleName = (e) => {
+   
+    setname(e.target.value);
+  };
 
+  const check = () => {
+    const values = [id, name, username, email ];
 
-    const onFinish = () => {
-      message.success('Submit success!');
-    };
-
-    const onFinishFailed = () => {
-      message.error('Submit failed!');
-    };
-
-    useEffect(() => {
-      forceUpdate({});
-    }, []);
+    const allFieldsFilled = values.every((field) => {
+      const value = `${field}`.trim();
+      return value !== '' && value !== '0';
+    }); 
+    if (allFieldsFilled) {
+      count = 1;
+      
+    } else {
+      
+      
+    }
     
-    const navigate = useNavigate();
-    const handleid = (e) => {
-      setId(e.target.value);
-    };
-    const handleusername = (e) => {
-      setUsername(e.target.value);
-    };
-    const handleemail = (e) => {
-      setEmail(e.target.value);
-    };
-    const handlename = (e) => {
-      setName(e.target.value);
-    };
-
-    console.log(Id )
-    console.log(Name)
-    console.log(Email)
-    const Createuser = useCallback(async () => {
-      
-      try {
-        const response = await axios.post(
-          "https://jsonplaceholder.typicode.com/users",
-          {
-            body: JSON.stringify({
-              id: Id,
-              name: Name,
-              username: Username ,
-              email: Email ,
-            }),
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-            },
-          })
-        // handle success
-        navigate('/dashboard')
-        console.log(response);
-        setaddUserData(response.data);
-
-        openNotificationWithIcon("success");
-      } catch (error) {}
-    }, [Id, Name , Username, Email]);
-    console.log(addUserData);
-
-
-
-
-    return (
-      <>
-      
-          <Wrapperdiv>
-            <div className="wrap">
-              <Space direction="vertical">
-                <Form
-                form={form}
-                autoComplete="off"
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                >
-                  <div className="innerwrap">
-                <div> <Form.Item 
-                label="Id" 
-                name= "Id"
-                value={Id} 
-                onChange={handleid} 
-                rules={[
-                  {
-                    required: true,
-                    
-                  },
-                  
-                ]}
-                />
-                </div>
-                  <div> <Input /> </div> 
-                  </div>
-                  
-                  <div className="innerwrap">
-                <div> 
-                  <Form.Item 
-                  label="Name"
-                  value={Name} 
-                  name= "Name"
-                  onChange={handlename} 
-                  rules={[
-                    {
-                      required: true,
-                     
-                    },
-                    
-                  ]}
-                  />
-                  </div>
-                  <div>  <Input /></div>
-                    </div>
-
-                    <div className="innerwrap">
-                    <div>
-                    <Form.Item
-                    label="Username"
-                    value={Username}
-                    onChange={handleusername}   
-                    name= "Username"
-                    rules={[
-                      {
-                        required: true,
-                        
-                      },
-                      
-                    ]}
-                    />
-                    </div>
-                  <div> <Input /> </div>
-                    </div>
-
-                  <div className="innerwrap">
-                    <div>
-                      <Form.Item
-                      label="Email" 
-                      value={Email}
-                      name= "email"
-                      onChange={handleemail}
-                      rules={[
-                        {
-                          required: true,
-                          
-                        },
-          
-                      ]}
-                      />
-                      </div>
-                    <div><Input /></div>
-                  </div>
-                 
-
-                  <Form.Item className="btn">
-                    <Button type="primary" onClick={() => Createuser()}  htmlType="submit">
-                    Add User
-                    </Button>
-                    
-                  </Form.Item> 
-                </Form>
-              </Space>
-            </div>
-          </Wrapperdiv>
-      
-      </>
-    );
+  };
+  const layout = {
+    labelCol: {
+      span: 8,
+    },
+    wrapperCol: {
+      span: 16,
+    },
   }
 
-  export default AddUser;
+
+  const validateMessages = {
+    required: '${label} is required!',
+    types: {
+      email: '${label} is not a valid email!',
+      number: '${label} is not a valid number!',
+    },
+    number: {
+      range: '${label} must be between ${min} and ${max}',
+    },
+  };
+    
+  const Createuser = useCallback(async () => {
+   
+    try {
+   if(count ==  1 )
+      { const response = await axios.post(
+        "https://jsonplaceholder.typicode.com/users",
+        {
+          body: JSON.stringify({
+            id: id,
+            name: name,
+            username: username,
+            email: email,
+          }),
+        }
+      );
+      // handle success
+      navigate("/dashboard");
+      console.log(response);
+      setaddUserData(response.data);
+      message.success("Submit success!");
+      openNotificationWithIcon("success");
+    }
+     
+    } catch (error) {
+
+      message.error("Submit failed!");
+    }
+  }, [id, name, username, email]);
+  console.log(addUserData);
+
+  return (
+    <>
+      <Wrapperdiv>
+        <div className="wrap">
+              
+        <Form {...layout} name="nest-messages" validateMessages={validateMessages}
+        form={form}
+        autoComplete="off" >
+                
+        <Form.Item
+            name={['user', 'Id']}
+            label="Id"
+            value={id}
+            onChange={handleId}
+            rules={[
+              {
+                required: true,
+              },
+            ]}>
+            <Input />
+          </Form.Item>
+                  
+          <Form.Item
+            name={['user', 'name']}
+            label="Name"
+            value={name}
+            onChange={handleName}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name={['user', 'email']}
+            label="Email"
+            value={email}
+            onChange={handleEmail}
+            rules={[
+              { 
+                required: true,
+                type: 'email',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name={['user', 'username']}
+            label="Username"
+            value={username}
+            onChange={handleUsername}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+                  <Form.Item className="btn">
+                    <Button
+                      type="primary"
+                      onClick={ () => { 
+                        check();
+                        Createuser() ;
+                        
+                      }
+                    }
+                      htmlType="submit">
+                      Add User
+                    </Button>
+                  
+                  </Form.Item>
+                </Form>
+            
+            </div>
+          </Wrapperdiv>
+        </>
+  );
+}
+
+export default AddUser;

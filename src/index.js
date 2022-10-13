@@ -12,14 +12,25 @@ import axios from 'axios';
 axios.interceptors.request.use( (request) => {
 console.log(request)
 const a = localStorage.getItem("Jwt")
-request.headers.channelName = "application/json" ;
-request.headers.Jwttokken = a ;
+request.headers["Content-Type"] = "application/json"
+request.headers.authorization = `bearer ${a}`   ;
 
   return(request)
-
-
 })
 
+axios.interceptors.response.use(
+  (response ) => {
+    if (response.status === 201 || 200)
+   {
+    // alert("Posted Successfully")
+   }
+   return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+  
+)
 
 
 

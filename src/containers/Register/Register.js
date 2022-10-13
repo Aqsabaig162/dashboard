@@ -1,11 +1,10 @@
 import React from 'react'
 import {LoginWrapper} from "./register.style"
-import {Input, Space , Button , DatePicker , Checkbox, Form, Select, Divider, notification, } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import {Input,  Button ,  Checkbox, Form, Select, notification, } from 'antd';
 import { useNavigate , Link } from 'react-router-dom';
 import { auth } from '../firebase'
 import { useState } from "react";
-import { useDispatch} from 'react-redux'
+
 // import addNotification from 'react-push-notification';
 
 const openNotificationWithIcon = (type) => {
